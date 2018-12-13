@@ -497,7 +497,7 @@ Task("PrepareTestAssets:CopyNuGetSdkResolver")
     {
         try
         {
-            var nugetSdkBuildPath =  CombinePaths(env.Folders.Bin, configuration, "Nuget.MSBuildSdkResolver", "net46", "NuGet.MSBuildSdkResolver.dll");
+            var nugetSdkBuildPath =  CombinePaths(env.Folders.Bin, configuration, "NuGet.MSBuildSdkResolver", "net46", "NuGet.MSBuildSdkResolver.dll");
             var destdir = CombinePaths(env.Folders.MSBuild, "15.0", "Bin", "SdkResolvers", "NuGet.MSBuildSdkResolver");
             Information($"creating directory: destdir = {destdir}");
             DirectoryHelper.Create(destdir);

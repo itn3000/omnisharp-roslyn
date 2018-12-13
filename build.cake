@@ -495,10 +495,19 @@ Task("PrepareTestAssets:CopyNuGetSdkResolver")
     .IsDependeeOf("PrepareTestAssets")
     .Does(() =>
     {
-       var nugetSdkBuildPath =  CombinePaths(env.Folders.Bin, configuration, "Nuget.MSBuildSdkResolver", "net46", "NuGet.MSBuildSdkResolver.dll");
-       var destdir = CombinePaths(env.Folders.MSBuild, "15.0", "Bin", "SdkResolvers", "NuGet.MSBuildSdkResolver");
-       DirectoryHelper.Create(destdir);
-       FileHelper.Copy(nugetSdkBuildPath, CombinePaths(destdir, "NuGet.MSBuildSdkResolver.dll"));
+        try
+        {
+            var nugetSdkBuildPath =  CombinePaths(env.Folders.Bin, configuration, "Nuget.MSBuildSdkResolver", "net46", "NuGet.MSBuildSdkResolver.dll");
+            var destdir = CombinePaths(env.Folders.MSBuild, "15.0", "Bin", "SdkResolvers", "NuGet.MSBuildSdkResolver");
+            Information($"creating directory: destdir = {destdir}");
+            DirectoryHelper.Create(destdir);
+            Information($"copying from {nugetSdkBuildPath} to {CombinePaths(destdir, "NuGet.MSBuildSdkResolver.dll")}");
+            FileHelper.Copy(nugetSdkBuildPath, CombinePaths(destdir, "NuGet.MSBuildSdkResolver.dll"));
+        }
+        catch(Exception e)
+        {
+            Information("error in copynugetsdkresolver: {0}", e);
+        }
     });
 
 void BuildWithDotNetCli(BuildEnvironment env, string configuration)
